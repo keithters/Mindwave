@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<cinder>
+<block
+	name="Mindwave"
+	id="org.libcinder.mindwave"
+	author="Keith Butters"
+	summary="Thinkgear Mindwave (and others) support for OSX"
+	>
+	<supports os="macosx" />
+	<source compileAs="cpp">src/cinder/Mindwave.cpp</source>
+	<header>src/cinder/Mindwave.h</header>
+	<buildCopy>lib/macosx/ThinkGear.bundle</buildcopy>
+	<includePath>src</includePath>	
+</block>
+</cinder>
