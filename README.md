@@ -1,4 +1,4 @@
-mindwave-cinderblock
+Mindwave - cinderblock
 ====================
 
 Cinder wrapper for using the ThinkGear MindWave (and other ThinkGear devices) brain wave headset from NeuroSky.
