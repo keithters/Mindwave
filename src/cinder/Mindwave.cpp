@@ -8,6 +8,7 @@
 #include "Mindwave.h"
 #include "cinder/app/App.h"
 
+using namespace ci;
 using namespace ci::app;
 
 // Max number of connections
@@ -39,22 +40,20 @@ Mindwave::Mindwave( const char * port )
 	mPortname = port;
 	
 	// load and initialize the bundle
-	std::string urlStr = App::getResourcePath( "ThinkGear.bundle" ).string();
+	CFBundleRef mainBundle	= CFBundleGetMainBundle();
+	CFURLRef mainURL		= CFBundleCopyExecutableURL( mainBundle );
+	CFURLRef bundleURL		= CFURLCreateCopyAppendingPathComponent( kCFAllocatorDefault, mainURL, CFSTR( "../ThinkGear.bundle" ), false );
 	
-	CFURLRef bundleURL = CFURLCreateWithFileSystemPath(kCFAllocatorDefault,
-        CFStringCreateWithCString( kCFAllocatorDefault, urlStr.c_str(), kCFStringEncodingASCII ),
-        kCFURLPOSIXPathStyle,
-        true );
-		
 	mThinkGearBundle = CFBundleCreate( kCFAllocatorDefault, bundleURL);
-	CFRelease( bundleURL );
 	
 	if( !mThinkGearBundle ){
-		console() << "Error: Could not load the ThinkGear.bundle. Does it exist in: " << App::getResourcePath() << "?" << endl;
+		console() << "Error: Could not load the ThinkGear.bundle. Does it exist in: " << cinder::cocoa::convertCfString( CFURLGetString( bundleURL ) ) << " ?" << endl;
 		exit(1);
+	} else {
+		// console() << "Found the bundle: " << cinder::cocoa::convertCfString( CFURLGetString( bundleURL ) ) << endl;
 	}
 	
-	// setup function pointers 
+	// set up function pointers 
 	TG_GetDriverVersion		= (int(*)())CFBundleGetFunctionPointerForName(mThinkGearBundle, CFSTR("TG_GetDriverVersion"));
 	TG_GetNewConnectionId	= (int(*)())CFBundleGetFunctionPointerForName(mThinkGearBundle,CFSTR("TG_GetNewConnectionId"));
 	TG_Connect				= (int(*)(int, const char *, int, int))CFBundleGetFunctionPointerForName(mThinkGearBundle,CFSTR("TG_Connect"));
