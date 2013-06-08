@@ -9,7 +9,7 @@
 	<supports os="macosx" />
 	<source compileAs="cpp">src/cinder/Mindwave.cpp</source>
 	<header>src/cinder/Mindwave.h</header>
-	<buildCopy>lib/macosx/ThinkGear.bundle</buildcopy>
+	<buildCopy>lib/macosx/ThinkGear.bundle</buildCopy>
 	<includePath>src</includePath>	
 </block>
 </cinder>
