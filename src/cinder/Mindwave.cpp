@@ -46,6 +46,9 @@ Mindwave::Mindwave( const char * port )
 	
 	mThinkGearBundle = CFBundleCreate( kCFAllocatorDefault, bundleURL);
 	
+	CFRelease( mainURL );
+	CFRelease( bundleURL );
+	
 	if( !mThinkGearBundle ) {
 		console() << "Error: Could not load the ThinkGear.bundle. Does it exist in: " << cinder::cocoa::convertCfString( CFURLGetString( bundleURL ) ) << " ?" << endl;
 		exit(1);

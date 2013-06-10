@@ -57,18 +57,18 @@ class Mindwave {
 	int mBaudRate		= 57600;	// set default baud rate
 	
 	
-	float mSignalQuality;	// poor signal status
-	float mAttention;		// eSense attention
-	float mMeditation;		// eSense meditation
-	float mRaw;
-	float mDelta;
-	float mTheta;
-	float mAlpha1;
-	float mAlpha2;
-	float mBeta1;
-	float mBeta2;
-	float mGamma1;
-	float mGamma2;
+	int mSignalQuality;	// poor signal status
+	int mAttention;		// eSense attention
+	int mMeditation;		// eSense meditation
+	int mRaw;
+	int mDelta;
+	int mTheta;
+	int mAlpha1;
+	int mAlpha2;
+	int mBeta1;
+	int mBeta2;
+	int mGamma1;
+	int mGamma2;
 	int mBlinkStrength;
 
 	// ThinkGear function pointers
