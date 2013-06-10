@@ -24,20 +24,20 @@ class Mindwave {
 	void freeConnection();
 	
 	int getDriverVersion();
-	int getConnectionID();
+	int getConnectionID() const { return mConnectionID; };
 	
-	float getSignalQuality() const { return mSignalQuality; };
-	float getAttention() const { return mAttention; };
-	float getMeditation() const { return mMeditation; };
-	float getRaw() const { return mRaw; };
-	float getDelta() const { return mDelta; }
-	float getTheta() const { return mTheta; }
-	float getAlpha1() const { return mAlpha1; };
-	float getAlpha2() const { return mAlpha2; };
-	float getBeta1() const { return mBeta1; };
-	float getBeta2() const { return mBeta2; };
-	float getGamma1() const { return mGamma1; };
-	float getGamma2() const { return mGamma2; };
+	int getSignalQuality() const { return mSignalQuality; };
+	int getAttention() const { return mAttention; };
+	int getMeditation() const { return mMeditation; };
+	int getRaw() const { return mRaw; };
+	int getDelta() const { return mDelta; }
+	int getTheta() const { return mTheta; }
+	int getAlpha1() const { return mAlpha1; };
+	int getAlpha2() const { return mAlpha2; };
+	int getBeta1() const { return mBeta1; };
+	int getBeta2() const { return mBeta2; };
+	int getGamma1() const { return mGamma1; };
+	int getGamma2() const { return mGamma2; };
 	int getBlinkStrength() const { return mBlinkStrength; };
 	
 	void enableBlinkDetection();
@@ -49,6 +49,9 @@ class Mindwave {
 	~Mindwave();
 		
   private:
+	
+	CFBundleRef mThinkGearBundle;
+  
 	const char * mPortname;			// Name of port to run on e.g. "/Dev/tty.MindWave"
 	int mConnectionID	= -1;		// ThinkGear connection handle
 	int mBaudRate		= 57600;	// set default baud rate
@@ -78,6 +81,4 @@ class Mindwave {
 	void (*TG_FreeConnection)(int)					= NULL;
 	int (*TG_EnableBlinkDetection)(int, int)		= NULL;
 	int (*TG_EnableLowPassFilter)(int, int)			= NULL;
-	
-	CFBundleRef mThinkGearBundle;
 };

@@ -46,11 +46,9 @@ Mindwave::Mindwave( const char * port )
 	
 	mThinkGearBundle = CFBundleCreate( kCFAllocatorDefault, bundleURL);
 	
-	if( !mThinkGearBundle ){
+	if( !mThinkGearBundle ) {
 		console() << "Error: Could not load the ThinkGear.bundle. Does it exist in: " << cinder::cocoa::convertCfString( CFURLGetString( bundleURL ) ) << " ?" << endl;
 		exit(1);
-	} else {
-		// console() << "Found the bundle: " << cinder::cocoa::convertCfString( CFURLGetString( bundleURL ) ) << endl;
 	}
 	
 	// set up function pointers 
