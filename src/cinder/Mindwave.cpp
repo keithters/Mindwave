@@ -39,45 +39,47 @@ Mindwave::Mindwave( const char * port )
 {
 	mPortname = port;
 	
-	// load and initialize the bundle
-	CFBundleRef mainBundle	= CFBundleGetMainBundle();
-	CFURLRef mainURL		= CFBundleCopyExecutableURL( mainBundle );
-	CFURLRef bundleURL		= CFURLCreateCopyAppendingPathComponent( kCFAllocatorDefault, mainURL, CFSTR( "../ThinkGear.bundle" ), false );
-	
-	mThinkGearBundle = CFBundleCreate( kCFAllocatorDefault, bundleURL);
-	
-	CFRelease( mainURL );
-	CFRelease( bundleURL );
-	
-	if( !mThinkGearBundle ) {
-		console() << "Error: Could not load the ThinkGear.bundle. Does it exist in: " << cinder::cocoa::convertCfString( CFURLGetString( bundleURL ) ) << " ?" << endl;
-		exit(1);
-	}
-	
-	// set up function pointers 
-	TG_GetDriverVersion		= (int(*)())CFBundleGetFunctionPointerForName(mThinkGearBundle, CFSTR("TG_GetDriverVersion"));
-	TG_GetNewConnectionId	= (int(*)())CFBundleGetFunctionPointerForName(mThinkGearBundle,CFSTR("TG_GetNewConnectionId"));
-	TG_Connect				= (int(*)(int, const char *, int, int))CFBundleGetFunctionPointerForName(mThinkGearBundle,CFSTR("TG_Connect"));
-	TG_ReadPackets			= (int(*)(int, int))CFBundleGetFunctionPointerForName(mThinkGearBundle,CFSTR("TG_ReadPackets"));
-	TG_GetValue				= (float(*)(int, int))CFBundleGetFunctionPointerForName(mThinkGearBundle,CFSTR("TG_GetValue"));
-	TG_Disconnect			= (int(*)(int))CFBundleGetFunctionPointerForName(mThinkGearBundle,CFSTR("TG_Disconnect"));
-	TG_FreeConnection		= (void(*)(int))CFBundleGetFunctionPointerForName(mThinkGearBundle,CFSTR("TG_FreeConnection"));
-	TG_EnableBlinkDetection	= (int(*)(int, int))CFBundleGetFunctionPointerForName(mThinkGearBundle,CFSTR("TG_EnableBlinkDetection"));
-	TG_EnableLowPassFilter	= (int(*)(int, int))CFBundleGetFunctionPointerForName(mThinkGearBundle,CFSTR("TG_EnableLowPassFilter"));
-	
-	if( !TG_GetDriverVersion ||
-		!TG_GetNewConnectionId ||
-		!TG_Connect ||
-		!TG_ReadPackets ||
-		!TG_GetValue ||
-		!TG_Disconnect ||
-		!TG_FreeConnection ||
-		!TG_EnableBlinkDetection ||
-		!TG_EnableLowPassFilter )
-	{
-		console() << "Error: Expected functions in ThinkGear.bundle were not found.";
-		exit(1);
-	}
+	#if defined( CINDER_MAC )
+		// load and initialize the bundle
+		CFBundleRef mainBundle	= CFBundleGetMainBundle();
+		CFURLRef mainURL		= CFBundleCopyExecutableURL( mainBundle );
+		CFURLRef bundleURL		= CFURLCreateCopyAppendingPathComponent( kCFAllocatorDefault, mainURL, CFSTR( "../ThinkGear.bundle" ), false );
+		
+		mThinkGearBundle = CFBundleCreate( kCFAllocatorDefault, bundleURL);
+		
+		CFRelease( mainURL );
+		CFRelease( bundleURL );
+		
+		if( !mThinkGearBundle ) {
+			console() << "Error: Could not load the ThinkGear.bundle. Does it exist in: " << cinder::cocoa::convertCfString( CFURLGetString( bundleURL ) ) << " ?" << endl;
+			exit(1);
+		}
+		
+		// set up function pointers 
+		TG_GetDriverVersion		= (int(*)())CFBundleGetFunctionPointerForName(mThinkGearBundle, CFSTR("TG_GetDriverVersion"));
+		TG_GetNewConnectionId	= (int(*)())CFBundleGetFunctionPointerForName(mThinkGearBundle,CFSTR("TG_GetNewConnectionId"));
+		TG_Connect				= (int(*)(int, const char *, int, int))CFBundleGetFunctionPointerForName(mThinkGearBundle,CFSTR("TG_Connect"));
+		TG_ReadPackets			= (int(*)(int, int))CFBundleGetFunctionPointerForName(mThinkGearBundle,CFSTR("TG_ReadPackets"));
+		TG_GetValue				= (float(*)(int, int))CFBundleGetFunctionPointerForName(mThinkGearBundle,CFSTR("TG_GetValue"));
+		TG_Disconnect			= (int(*)(int))CFBundleGetFunctionPointerForName(mThinkGearBundle,CFSTR("TG_Disconnect"));
+		TG_FreeConnection		= (void(*)(int))CFBundleGetFunctionPointerForName(mThinkGearBundle,CFSTR("TG_FreeConnection"));
+		TG_EnableBlinkDetection	= (int(*)(int, int))CFBundleGetFunctionPointerForName(mThinkGearBundle,CFSTR("TG_EnableBlinkDetection"));
+		TG_EnableLowPassFilter	= (int(*)(int, int))CFBundleGetFunctionPointerForName(mThinkGearBundle,CFSTR("TG_EnableLowPassFilter"));
+		
+		if( !TG_GetDriverVersion ||
+			!TG_GetNewConnectionId ||
+			!TG_Connect ||
+			!TG_ReadPackets ||
+			!TG_GetValue ||
+			!TG_Disconnect ||
+			!TG_FreeConnection ||
+			!TG_EnableBlinkDetection ||
+			!TG_EnableLowPassFilter )
+		{
+			console() << "Error: Expected functions in ThinkGear.bundle were not found.";
+			exit(1);
+		}
+	#endif
 	
 	// get a new connection ID
 	mConnectionID = TG_GetNewConnectionId();
@@ -155,7 +157,9 @@ Mindwave::~Mindwave()
 		TG_Disconnect( mConnectionID );
 		TG_FreeConnection( mConnectionID );
 	}
-		
-	if( mThinkGearBundle )
-		CFRelease( mThinkGearBundle );
+	
+	#if defined( CINDER_MAC )
+		if( mThinkGearBundle )
+			CFRelease( mThinkGearBundle );
+	#endif
 }

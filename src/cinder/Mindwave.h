@@ -5,8 +5,11 @@
 //
 //
 
-
-#include <CoreFoundation/CoreFoundation.h>
+#if defined( CINDER_MAC )
+	#include <CoreFoundation/CoreFoundation.h>
+#elif defined ( CINDER_MSW )
+	#include "thinkgear.h"
+#endif
 
 using namespace std;
 
@@ -50,7 +53,9 @@ class Mindwave {
 		
   private:
 	
-	CFBundleRef mThinkGearBundle;
+	#if defined( CINDER_MAC )
+		CFBundleRef mThinkGearBundle;
+	#endif
   
 	const char * mPortname;			// Name of port to run on e.g. "/Dev/tty.MindWave"
 	int mConnectionID	= -1;		// ThinkGear connection handle
@@ -71,14 +76,16 @@ class Mindwave {
 	int mGamma2;
 	int mBlinkStrength;
 
-	// ThinkGear function pointers
-	int (*TG_GetDriverVersion)()					= NULL;
-	int (*TG_GetNewConnectionId)()					= NULL;
-	int (*TG_Connect)(int, const char *, int, int)	= NULL;
-	int (*TG_ReadPackets)(int, int)					= NULL;
-	float (*TG_GetValue)(int, int)					= NULL;
-	int (*TG_Disconnect)(int)						= NULL;
-	void (*TG_FreeConnection)(int)					= NULL;
-	int (*TG_EnableBlinkDetection)(int, int)		= NULL;
-	int (*TG_EnableLowPassFilter)(int, int)			= NULL;
+	#if defined( CINDER_MAC )
+		// ThinkGear function pointers
+		int (*TG_GetDriverVersion)()					= NULL;
+		int (*TG_GetNewConnectionId)()					= NULL;
+		int (*TG_Connect)(int, const char *, int, int)	= NULL;
+		int (*TG_ReadPackets)(int, int)					= NULL;
+		float (*TG_GetValue)(int, int)					= NULL;
+		int (*TG_Disconnect)(int)						= NULL;
+		void (*TG_FreeConnection)(int)					= NULL;
+		int (*TG_EnableBlinkDetection)(int, int)		= NULL;
+		int (*TG_EnableLowPassFilter)(int, int)			= NULL;
+	#endif
 };
