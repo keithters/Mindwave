@@ -4,6 +4,9 @@
 //  Created by Keith Butters on 6/7/13.
 //
 //
+#pragma once
+
+#include "cinder/Cinder.h"
 
 #if defined( CINDER_MAC )
 	#include <CoreFoundation/CoreFoundation.h>
@@ -58,8 +61,8 @@ class Mindwave {
 	#endif
   
 	const char * mPortname;			// Name of port to run on e.g. "/Dev/tty.MindWave"
-	int mConnectionID	= -1;		// ThinkGear connection handle
-	int mBaudRate		= 57600;	// set default baud rate
+	int mConnectionID;		// ThinkGear connection handle
+	int mBaudRate;	// set default baud rate
 	
 	
 	int mSignalQuality;	// poor signal status

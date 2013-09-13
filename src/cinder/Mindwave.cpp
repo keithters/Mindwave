@@ -37,6 +37,9 @@ using namespace ci::app;
 
 Mindwave::Mindwave( const char * port )
 {
+	mConnectionID	= -1;		// ThinkGear connection handle
+	mBaudRate		= 57600;	// set default baud rate
+
 	mPortname = port;
 	
 	#if defined( CINDER_MAC )
@@ -83,6 +86,7 @@ Mindwave::Mindwave( const char * port )
 	
 	// get a new connection ID
 	mConnectionID = TG_GetNewConnectionId();
+	std::cout << "mConnectionID: " << mConnectionID << std::endl;
 }
 
 bool Mindwave::connect()
