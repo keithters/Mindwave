@@ -6,10 +6,15 @@
 	author="Keith Butters"
 	summary="Thinkgear Mindwave (and others) support for OSX"
 	>
-	<supports os="macosx" />
+	<includePath>src</includePath>
 	<source compileAs="cpp">src/cinder/Mindwave.cpp</source>
 	<header>src/cinder/Mindwave.h</header>
-	<buildCopy>lib/macosx/ThinkGear.bundle</buildCopy>
-	<includePath>src</includePath>	
+	<platform os="macosx">
+		<buildCopy>lib/macosx/ThinkGear.bundle</buildCopy>
+	</platform>
+	<platform os="msw">
+		<staticLibrary>lib/win32/thinkgear.lib</staticLibrary>
+		<buildCopy>lib/win32/thinkgear.dll</buildCopy>
+	</platform>
 </block>
 </cinder>
