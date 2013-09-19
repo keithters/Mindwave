@@ -4,7 +4,9 @@
 	name="Mindwave"
 	id="org.libcinder.mindwave"
 	author="Keith Butters"
+	license=""
 	summary="Thinkgear Mindwave (and others) support for OSX"
+	version="0.9"
 	>
 	<includePath>src</includePath>
 	<source compileAs="cpp">src/cinder/Mindwave.cpp</source>
