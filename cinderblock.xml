@@ -19,4 +19,5 @@
 		<buildCopy>lib/win32/thinkgear.dll</buildCopy>
 	</platform>
 </block>
+<template>templates/Basic Mindwave/template.xml</template>
 </cinder>
