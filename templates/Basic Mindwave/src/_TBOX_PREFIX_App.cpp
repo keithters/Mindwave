@@ -19,7 +19,7 @@ class _TBOX_PREFIX_App : public AppNative {
 	void update();
 	void draw();
 	
-	Mindwave *mMindwave;
+	MindwaveRef mMindwave;
 	
 	int sig;
 	int att;
@@ -40,7 +40,7 @@ class _TBOX_PREFIX_App : public AppNative {
 
 void _TBOX_PREFIX_App::setup()
 {
-	mMindwave = new Mindwave( PORT );
+	mMindwave = Mindwave::create( PORT );
 	console() << "ThinkGear driver version: " << mMindwave->getDriverVersion() << endl;
 	
 	mMindwave->enableBlinkDetection();

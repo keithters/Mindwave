@@ -14,11 +14,13 @@
 	#include "thinkgear.h"
 #endif
 
-using namespace std;
+
+typedef std::shared_ptr<class Mindwave> MindwaveRef;
 
 class Mindwave {
   public:
-	Mindwave( const char * port );
+	
+	static std::unique_ptr<Mindwave> create( const char * port );
 	
 	const char * getPortName() const { return mPortname; };
 	void setBaudRate( int rate ) { mBaudRate = rate; };
@@ -55,6 +57,8 @@ class Mindwave {
 	~Mindwave();
 		
   private:
+  
+  	Mindwave( const char * port );
 	
 	#if defined( CINDER_MAC )
 		CFBundleRef mThinkGearBundle;

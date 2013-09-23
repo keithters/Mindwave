@@ -35,6 +35,13 @@ using namespace ci::app;
 #define 	TG_DATA_GAMMA2				12
 #define 	TG_DATA_BLINK_STRENGTH		37
 
+
+std::unique_ptr<Mindwave> Mindwave::create( const char * port )
+{
+	return std::unique_ptr<Mindwave>( new Mindwave( port ) );
+}
+
+
 Mindwave::Mindwave( const char * port )
 {
 	mConnectionID	= -1;		// ThinkGear connection handle
@@ -54,7 +61,7 @@ Mindwave::Mindwave( const char * port )
 		CFRelease( bundleURL );
 		
 		if( !mThinkGearBundle ) {
-			console() << "Error: Could not load the ThinkGear.bundle. Does it exist in: " << cinder::cocoa::convertCfString( CFURLGetString( bundleURL ) ) << " ?" << endl;
+			console() << "Error: Could not load the ThinkGear.bundle. Does it exist in: " << cinder::cocoa::convertCfString( CFURLGetString( bundleURL ) ) << " ?" << std::endl;
 			exit(1);
 		}
 		
