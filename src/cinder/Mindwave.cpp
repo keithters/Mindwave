@@ -165,7 +165,7 @@ int Mindwave::getDriverVersion()
 Mindwave::~Mindwave()
 {
 	if( mConnectionID != -1 ){
-		TG_Disconnect( mConnectionID );
+		// TG_Disconnect( mConnectionID );
 		TG_FreeConnection( mConnectionID );
 	}
 	
