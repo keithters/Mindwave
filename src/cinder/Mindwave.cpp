@@ -93,7 +93,6 @@ Mindwave::Mindwave( const char * port )
 	
 	// get a new connection ID
 	mConnectionID = TG_GetNewConnectionId();
-	std::cout << "mConnectionID: " << mConnectionID << std::endl;
 }
 
 bool Mindwave::connect()
@@ -165,7 +164,6 @@ int Mindwave::getDriverVersion()
 Mindwave::~Mindwave()
 {
 	if( mConnectionID != -1 ){
-		// TG_Disconnect( mConnectionID );
 		TG_FreeConnection( mConnectionID );
 	}
 	
